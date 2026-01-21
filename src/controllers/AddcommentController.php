@@ -11,8 +11,6 @@ class AddcommentController extends Controller {
             $content = $_POST['content'];
             $postId = $_GET['id'];
             $userId = $_SESSION['user']['id'];
-            
-            // On récupère le parent_id s'il existe dans le formulaire POST
             $parentId = !empty($_POST['parent_id']) ? $_POST['parent_id'] : null;
             
             $commentRepo->create($content, $postId, $userId, $parentId);

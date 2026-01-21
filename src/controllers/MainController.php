@@ -36,6 +36,6 @@ class MainController extends Controller
         }
 
         $posts = $postsWithComments;
-        return require_once __DIR__ . '/../views/index.php';
+        return require_once __DIR__ . '/../views/home.php';
     }
 }

@@ -11,7 +11,6 @@ require_once(__DIR__ . "/../src/models/repository/CommentRepository.php");
 require_once(__DIR__ . "/../src/controllers/Controller.php");
 require_once(__DIR__ . "/../src/controllers/MainController.php");
 
-require_once(__DIR__ . "/../src/controllers/InscriptionController.php");
 require_once(__DIR__ . "/../src/controllers/ConnexionController.php");
 require_once(__DIR__ . "/../src/controllers/DeconnexionController.php");
 require_once(__DIR__ . "/../src/controllers/InscriptionController.php");
@@ -21,6 +20,7 @@ require_once(__DIR__ . "/../src/controllers/EditcommentController.php");
 require_once(__DIR__ . "/../src/controllers/EditpostController.php");
 require_once(__DIR__ . "/../src/controllers/AddcommentController.php");
 require_once(__DIR__ . "/../src/controllers/DeletecommentController.php");
+require_once(__DIR__ . "/../src/controllers/AdminusersController.php");
 
 
 require_once(__DIR__ . "/../src/controllers/LikeController.php");

@@ -23,16 +23,16 @@ class PostRepository extends Db
     }
 
     public function findAll()
-{
-    $db = self::connect();
-    $sql = "SELECT post.*, user.prenom, user.image AS user_image,
+    {
+        $db = self::connect();
+        $sql = "SELECT post.*, user.prenom, user.image AS user_image,
         (SELECT COUNT(*) FROM likes WHERE id_post = post.id) AS count_likes
         FROM post 
         INNER JOIN user ON post.id_user = user.id 
         ORDER BY post.created_at DESC";
 
-    return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function toggleLike($postId, $userId)
     {
@@ -55,6 +55,13 @@ class PostRepository extends Db
         return $db->prepare($sql)->execute([$id, $id_user]);
     }
 
+    public function deleteByAdmin($id)
+    {
+        $db = self::connect();
+        $sql = "DELETE FROM post WHERE id = ?";
+        return $db->prepare($sql)->execute([$id]);
+    }
+
     public function update($id, $title, $content, $id_user)
     {
         $db = self::connect();
@@ -65,8 +72,9 @@ class PostRepository extends Db
     public function findById($id)
     {
         $db = self::connect();
-        $stmt = $db->prepare("SELECT * FROM post WHERE id = ?");
+        $sql = "SELECT * FROM post WHERE id = ?";
+        $stmt = $db->prepare($sql);
         $stmt->execute([$id]);
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

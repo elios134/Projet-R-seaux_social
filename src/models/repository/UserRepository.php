@@ -8,10 +8,11 @@ class UserRepository extends Db
     {
         $db = self::connect();
         $hash = password_hash($password, PASSWORD_DEFAULT);
+        $role = 'user'; // On définit le rôle par défaut ici
 
-        $sql = "INSERT INTO user (nom, prenom, mail, password, image) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO user (nom, prenom, mail, password, image, role) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($sql);
-        return $stmt->execute([$nom, $prenom, $mail, $hash, $image]);
+        return $stmt->execute([$nom, $prenom, $mail, $hash, $image, $role]);
     }
 
     // Connexion
@@ -28,5 +29,16 @@ class UserRepository extends Db
         $db = self::connect();
         $sql = "UPDATE user SET image = ? WHERE id = ?";
         return $db->prepare($sql)->execute([$imageName, $userId]);
+    }
+
+    public function findAll()
+    {
+        $db = self::connect();
+        return $db->query("SELECT * FROM user ORDER BY nom ASC")->fetchAll();
+    }
+    public function delete($id)
+    {
+        $db = self::connect();
+        return $db->prepare("DELETE FROM user WHERE id = ?")->execute([$id]);
     }
 }

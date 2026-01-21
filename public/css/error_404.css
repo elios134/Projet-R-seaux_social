@@ -1,3 +1,13 @@
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --danger: #ef4444;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -6,51 +16,48 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: 'Inter', sans-serif;
+    background: lightgrey;
+    color: var(--text-main);
     text-align: center;
 }
 
-
 .error-container {
-    background: white;
+    background: var(--card-bg);
     padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    border-top: 10px solid #e3350d; /* Rouge Pokémon */
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-top: 10px solid var(--danger);
     max-width: 500px;
 }
-
 
 h1 {
     font-size: 8rem;
     margin: 0;
-    color: #e3350d;
+    color: var(--danger);
     line-height: 1;
 }
-
 
 p {
     font-size: 1.2rem;
     margin: 20px 0;
-    color: #666;
+    color: var(--text-muted);
 }
-
 
 .btn-home {
     display: inline-block;
     margin-top: 20px;
-    padding: 12px 25px;
-    background-color: #2a75bb; /* Bleu Pokémon */
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary);
     color: white;
     text-decoration: none;
-    border-radius: 50px;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
 }
 
 .btn-home:hover {
-    background-color: #1b4d8d;
-    transform: scale(1.05);
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
 }
