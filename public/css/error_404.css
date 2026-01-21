@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+}
+
+
+.error-container {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-top: 10px solid #e3350d; /* Rouge Pokémon */
+    max-width: 500px;
+}
+
+
+h1 {
+    font-size: 8rem;
+    margin: 0;
+    color: #e3350d;
+    line-height: 1;
+}
+
+
+p {
+    font-size: 1.2rem;
+    margin: 20px 0;
+    color: #666;
+}
+
+
+.btn-home {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #2a75bb; /* Bleu Pokémon */
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-home:hover {
+    background-color: #1b4d8d;
+    transform: scale(1.05);
+}

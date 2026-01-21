@@ -1,0 +1,250 @@
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg: lightgrey;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg); 
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem; 
+}
+
+/* --- Header & Nav --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    height: 100px;
+    margin-bottom: 2rem;
+}
+
+.user-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--primary);
+    margin-left: 1rem;
+    font-weight: 500;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* --- Avatars --- */
+.avatar-lg {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #f0f2f5;
+}
+
+.avatar-md {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-sm {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* --- Forms & Inputs --- */
+section,
+article {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color:whitesmoke;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical; /* Empêche de casser le design horizontalement */
+    min-height: 80px;
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* --- Post Content --- */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.post-meta h3 {
+    color: var(--primary);
+    margin: 0;
+}
+
+.post-body p {
+    white-space: pre-wrap;
+    margin-bottom: 1rem;
+}
+
+/* --- Actions & Buttons --- */
+.actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+}
+
+.logout-link {
+    background: var(--danger);
+    color: white;
+    padding: 0.4rem 0.7rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-delete {
+    color: var(--danger);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-edit {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-delete:hover, .btn-edit:hover {
+    text-decoration: underline;
+}
+
+/* --- Comments Section --- */
+.comments-list {
+    margin-top: 15px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+}
+
+/* Style pour l'indentation des réponses récursives */
+.comment-item-reply {
+    margin-left: 40px;
+    border-left: 2px solid var(--border);
+    padding-left: 12px;
+    margin-top: 8px;
+}
+
+.comment-bubble {
+    background: #f0f2f5;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.comment-bubble strong {
+    display: block; /* Le nom est au-dessus du message */
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+}
+
+.comment-utility {
+    margin-left: 10px;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    display: flex;
+    gap: 10px;
+}
+
+.comment-utility a, 
+.comment-utility button.link-style {
+    color: var(--text-muted);
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.comment-utility a:hover {
+    color: var(--primary);
+}
+
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.comment-form input {
+    flex: 1;
+    border-radius: 20px;
+    margin-bottom: 0;
+}
+
+.text-muted {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}

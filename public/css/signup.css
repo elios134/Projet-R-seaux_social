@@ -1,0 +1,106 @@
+:root {
+    --success: #059669;
+    --success-hover: #047857;
+    --bg-signup: #f9fafb;
+    --border-color: #e5e7eb;
+}
+
+body.signup-page {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Utilise min-height au cas où le formulaire dépasse */
+    margin: 0;
+}
+
+.container {
+    background: #ffffff;
+    padding: 2.5rem; /* Légère réduction pour un meilleur équilibre */
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Meilleur rendu sur mobile */
+    max-width: 450px;
+    border: 1px solid #f3f4f6;
+}
+
+h2 {
+    text-align: center;
+    color: #111827;
+    margin-bottom: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Plus simple que grid pour ce formulaire */
+    gap: 1.2rem; /* Espace constant entre tous les blocs */
+}
+
+/* Style commun pour les inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    box-sizing: border-box; /* Très important pour que le padding ne casse pas la largeur */
+}
+
+/* Gestion du conteneur de mot de passe */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative; /* Pour positionner le bouton à l'intérieur */
+}
+
+.btn-toggle {
+    position: relative;
+    left: 1px;
+    bottom: 8px; /* Aligne l'œil au milieu de l'input */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 38px; /* Hauteur de l'input environ */
+}
+
+.btn-add {
+    background-color: var(--success);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.6rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-add:hover {
+    background-color: var(--success-hover);
+}
+
+.footer-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.footer-links a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
