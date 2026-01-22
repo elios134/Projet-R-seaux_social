@@ -31,17 +31,10 @@ class CommentRepository extends Db
         return $db->prepare($sql)->execute([$content, $postId, $userId, $parentId]);
     }
 
-    public function update($id, $content, $id_user)
+    public function delete($id)
     {
         $db = self::connect();
-        $sql = "UPDATE comment SET content = ? WHERE id = ? AND id_user = ?";
-        return $db->prepare($sql)->execute([$content, $id, $id_user]);
-    }
-
-    public function delete($id, $id_user)
-    {
-        $db = self::connect();
-        $sql = "DELETE FROM comment WHERE id = ? AND id_user = ?";
-        return $db->prepare($sql)->execute([$id, $id_user]);
+        $sql = "DELETE FROM comment WHERE id = ?";
+        return $db->prepare($sql)->execute([$id]);
     }
 }

@@ -55,3 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+ document.getElementById('avatar').onchange = function (evt) {
+            const [file] = this.files
+            if (file) {
+                document.getElementById('preview-avatar').src = URL.createObjectURL(file)
+            }
+        }

@@ -22,17 +22,20 @@ class ProfilController extends Controller {
                 $destinationFinale = $dossierDestination . $nouveauNom;
 
                 if (move_uploaded_file($_FILES['avatar']['tmp_name'], $destinationFinale)) {
-                    $userRepo->updateImage($_SESSION['user']['id'], $nouveauNom);
-                    $_SESSION['user']['image'] = $nouveauNom;
+                   
+                    $userRepo->updateImage($_SESSION['user']->getId(), $nouveauNom);
                     
-                    header("Location: /profil?");
+                    
+                    $_SESSION['user']->setImage($nouveauNom);
+                    
+                    header("Location: /profil?msg=Image mise à jour");
                     exit;
 
                 } else {
-                    echo "Erreur : Impossible de déplacer le fichier. Vérifiez que le dossier 'profiles' existe.";
+                    echo "Erreur : Impossible de déplacer le fichier.";
                 }
             } else {
-                echo "Erreur : Le fichier est peut-être trop lourd ou corrompu.";
+                echo "Erreur : Le fichier est invalide.";
             }
         }
         return require_once __DIR__ . '/../views/profil.php';

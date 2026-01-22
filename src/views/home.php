@@ -1,127 +1,118 @@
-<?php include __DIR__ . '/partials/comment.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Mini Réseau Social</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-
     <header>
-    <h1>Mini-RS</h1>
-    <nav>
-        <?php if (isset($_SESSION['user'])) : ?>
-            <!-- Pill utilisateur avec avatar et prénom -->
-            <a href="/profil" class="user-pill">
-                <img src="/uploads/profiles/<?= $_SESSION['user']['image'] ?>" class="avatar-lg" alt="Avatar">
-                <span><?= $_SESSION['user']['prenom'] ?></span>
-            </a>
-            
-            <?php if ($_SESSION['user']['role'] === 'admin'): ?>
-                <a href="/admin-users" class="btn-admin">Gérer Utilisateurs</a>
+        <h1>Mini-RS</h1>
+        <nav>
+            <?php if (isset($_SESSION['user'])) : ?>
+                <a href="/profil" class="user-pill">
+                    <img src="/uploads/profiles/<?= $_SESSION['user']->getImage() ?>" class="avatar-lg">
+                    <span><?= htmlspecialchars($_SESSION['user']->getPrenom()) ?></span>
+                </a>
+                <?php if ($_SESSION['user']->getRole() === 'admin'): ?>
+                    <a href="/admin-users" class="btn-admin">Administration</a>
+                <?php endif; ?>
+                <a href="/deconnexion" class="btn-danger">Déconnexion</a>
+            <?php else : ?>
+                <a href="/connexion">Connexion</a>
+                <a href="/inscription" class="btn-primary">Inscription</a>
             <?php endif; ?>
-            
-            <a href="/deconnexion" class="btn-danger">Déconnexion</a>
-            
-        <?php else : ?>
-            <a href="/connexion">Connexion</a>
-            <a href="/inscription" class="btn-primary">Inscription</a>
-        <?php endif; ?>
-    </nav>
-</header>
+        </nav>
+    </header>
 
     <div class="container">
-        <?php if (isset($_SESSION['user'])): ?>
-            <section class="publish-box">
-                <h2>Quoi de neuf ?</h2>
-                <form action="/addpost" method="POST"> <input type="text" name="title" placeholder="Titre de votre post" required>
-                    <textarea name="content" rows="4" placeholder="Exprimez-vous..." required></textarea>
-                    <button type="submit" name="submit_post">Publier</button>
+        <?php if (isset($_SESSION['user'])) : ?>
+            <section class="post-form">
+                <h3>Quoi de neuf, <?= $_SESSION['user']->getPrenom() ?> ?</h3>
+                <form action="/" method="POST">
+                    <input type="text" name="title" placeholder="Titre de votre post" required>
+                    <textarea name="content" placeholder="Exprimez-vous..." required></textarea>
+                    <button type="submit" class="btn-primary">Publier</button>
                 </form>
             </section>
-        <?php else: ?>
-            <div class="info-card">
-                <p><em>Connectez-vous pour partager vos pensées avec le monde.</em></p>
-            </div>
         <?php endif; ?>
 
-        <section class="posts">
-            <?php if (empty($posts)) : ?>
-                <p>Aucun post pour le moment.</p>
-            <?php else : ?>
-                <?php foreach ($posts as $post) : ?>
-                    <article class="post-card">
+        <section class="feed">
+            <?php foreach ($posts as $post) : ?>
+                <article class="post">
+                    <div class="post-header">
+                        <img src="/uploads/profiles/<?= $post->getUserImage() ?>" class="avatar-md">
+                        <div class="post-info">
+                            <strong><?= $post->getUserPrenom() ?></strong>
+                            <div class="post-actions">
+                                <?php 
+                                $isOwner = (isset($_SESSION['user']) && $_SESSION['user']->getId() == $post->getIdUser());
+                                $isAdminOrModo = (isset($_SESSION['user']) && ($_SESSION['user']->getRole() === 'admin' || $_SESSION['user']->getRole() === 'modo'));
+                                
+                                if ($isOwner): ?>
+                                    <a href="/edit-post?id=<?= $post->getId() ?>" class="btn-edit">Modifier</a>
+                                <?php endif; ?>
 
-                        <div class="post-header">
-                            <img src="/uploads/profiles/<?= $post['user_image'] ?>" class="avatar-md">
-                            <div class="post-info">
-                                <h3><?=$post['prenom'] ?></h3>
-                                <h2><?=$post['title']?></h2>
+                                <?php if ($isOwner || $isAdminOrModo): ?>
+                                    <a href="/delete-post?id=<?= $post->getId() ?>" class="btn-delete" onclick="return confirm('Supprimer ce post définitivement ?')">Supprimer</a>
+                                <?php endif; ?>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="post-body">
-                            <p><?=$post['content'] ?></p>
-                        </div>
+                    <div class="post-content">
+                        <h3><?= $post->getTitle() ?></h3>
+                        <p><?= $post->getContent() ?></p>
+                    </div>
 
-                        <div class="post-actions">
-                            <a href="like?id=<?= $post['id'] ?>" class="btn-like">
-                                ❤️ <?= $post['count_likes'] ?? 0 ?> J'aime
-                            </a>
-                        </div>
+                    <div class="comments-section">
+                        <h5>Commentaires</h5>
+                        <?php foreach ($post->comments as $comment): ?>
+                            <div class="comment <?= $comment['parent_id'] ? 'is-reply' : '' ?>">
+                                <div class="comment-header">
+                                    <img src="/uploads/profiles/<?= $comment['image'] ?>" class="avatar-sm">
+                                    <strong><?= $comment['prenom'] ?></strong>
+                                </div>
+                                
+                                <p><?= $comment['content'] ?></p>
+                                
+                                <div class="comment-actions">
+                                    <?php if (isset($_SESSION['user'])): ?>
+                                        <button onclick="toggleReply(<?= $comment['id'] ?>)">Répondre</button>
+                                        
+                                        <?php if ($_SESSION['user']->getId() == $comment['id_user'] || $_SESSION['user']->getRole() !== 'user'): ?>
+                                            <a href="/delete-comment?id=<?= $comment['id'] ?>" class="btn-delete-small" onclick="return confirm('Supprimer ce commentaire ?')">Supprimer</a>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
 
-                        <div class="comments-section">
-                            <h4>Commentaires</h4>
-                            <?php
-                            $commentsByParent = [];
-                            if (!empty($post['comments'])) {
-                                foreach ($post['comments'] as $comment) {
-                                    $parentId = $comment['parent_id'] ?? 0;
-                                    $commentsByParent[$parentId][] = $comment;
-                                }
-                            }
-                            renderComments(0, $commentsByParent, $post['id']);
-                            ?>
-
-                            <?php if (isset($_SESSION['user'])) : ?>
-                                <form action="addcomment?id=<?= $post['id'] ?>" method="POST" class="comment-form">
-                                    <input type="text" name="content" placeholder="Écrire un commentaire..." required>
+                                <form action="/add-comment?id=<?= $post->getId() ?>" method="POST" id="reply-<?= $comment['id'] ?>" class="reply-form" style="display:none;">
+                                    <input type="hidden" name="parent_id" value="<?= $comment['id'] ?>">
+                                    <textarea name="content" placeholder="Répondre..." required></textarea>
                                     <button type="submit">Envoyer</button>
                                 </form>
-                            <?php endif; ?>
-                        </div>
+                            </div>
+                        <?php endforeach; ?>
 
-                        <div class="post-footer">
-                            <?php
-                            $isOwner = (isset($_SESSION['user']) && $_SESSION['user']['id'] == $post['id_user']);
-                            $isAdminOrModo = (isset($_SESSION['user']) && ($_SESSION['user']['role'] === 'admin' || $_SESSION['user']['role'] === 'modo'));
-
-                            if ($isOwner || $isAdminOrModo):
-                            ?>
-                                <div class="actions">
-                                    <?php if ($isOwner): ?>
-                                        <a href="editpost?id=<?= $post['id'] ?>" class="btn-edit">Modifier</a>
-                                    <?php endif; ?>
-
-                                    <a href="deletepost?id=<?= $post['id'] ?>"
-                                        class="btn-delete"
-                                        onclick="return confirm('Supprimer définitivement ?')">
-                                        Supprimer
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
-                    </article>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <form action="/add-comment?id=<?= $post->getId() ?>" method="POST" class="main-comment-form">
+                                <textarea name="content" placeholder="Écrire un commentaire..." required></textarea>
+                                <button type="submit">Commenter</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                </article>
+            <?php endforeach; ?>
         </section>
     </div>
-    <script src="../Js/script.js"></script>
-</body>
 
+    <script>
+        function toggleReply(id) {
+            const f = document.getElementById('reply-' + id);
+            f.style.display = (f.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+</body>
 </html>

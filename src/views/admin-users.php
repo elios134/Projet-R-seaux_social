@@ -27,31 +27,35 @@
             <tbody>
                 <?php foreach ($users as $u): ?>
                     <form action="/admin-users" method="POST">
-                        <input type="hidden" name="id" value="<?= $u['id'] ?>">
+                        <input type="hidden" name="id" value="<?= $u->getId() ?>">
                         <input type="hidden" name="action" value="update">
                         <tr>
                             <td>
-                                <img src="/uploads/profiles/<?= $u['image'] ?>" class="avatar-sm">
+                                <img src="/uploads/profiles/<?= $u->getImage() ?>" class="avatar-sm" style="width:40px; height:40px; border-radius:50%;">
                             </td>
                             <td>
-                                <input type="text" name="nom" value="<?= $u['nom'] ?>">
-                                <input type="text" name="prenom" value="<?= $u['prenom'] ?>">
+                                <input type="text" name="nom" value="<?= htmlspecialchars($u->getNom()) ?>">
+                                <input type="text" name="prenom" value="<?= htmlspecialchars($u->getPrenom()) ?>">
                             </td>
-                            <td><input type="email" name="mail" value="<?= $u['mail'] ?>"></td>
-                            <td><select name="role" class="form-select">
-                                        <option value="admin" <?= $u['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
-                                        <option value="modo" <?= $u['role'] == 'modo' ? 'selected' : '' ?>>Modo</option>
-                                        <option value="user" <?= $u['role'] == 'user' ? 'selected' : '' ?>>User</option>
-
-                                    </select></td>
+                            <td>
+                                <input type="email" name="mail" value="<?= htmlspecialchars($u->getMail()) ?>">
+                            </td>
+                            <td>
+                                <select name="role" class="form-select">
+                                    <option value="admin" <?= $u->getRole() == 'admin' ? 'selected' : '' ?>>Admin</option>
+                                    <option value="modo" <?= $u->getRole() == 'modo' ? 'selected' : '' ?>>Modo</option>
+                                    <option value="user" <?= $u->getRole() == 'user' ? 'selected' : '' ?>>User</option>
+                                </select>
+                            </td>
                             <td>
                                 <button type="submit">Modifier</button>
-                                <?php if ($u['id'] != $_SESSION['user']['id']): ?>
-                                    <a href="/admin-users?delete=<?= $u['id'] ?>"
+
+                                <?php if ($u->getId() != $_SESSION['user']->getId()): ?>
+                                    <a href="/admin-users?delete=<?= $u->getId() ?>"
                                         style="color:red;"
                                         onclick="return confirm('Supprimer cet utilisateur ?')">Supprimer</a>
                                 <?php else: ?>
-                                    (Moi)
+                                    <strong>(Moi)</strong>
                                 <?php endif; ?>
                             </td>
                         </tr>

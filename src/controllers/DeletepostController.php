@@ -8,12 +8,13 @@ class DeletepostController extends Controller {
 
         if (isset($_SESSION['user']) && isset($_GET['id'])) {
             $postRepo = new PostRepository();
-            $role = $_SESSION['user']['role'];
+            $role = $_SESSION['user']->getRole();
+            $userId = $_SESSION['user']->getId();
 
             if ($role === 'admin' || $role === 'modo') {  
                 $postRepo->deleteByAdmin($_GET['id']);
             } else {
-                $postRepo->delete($_GET['id'], $_SESSION['user']['id']);
+                $postRepo->delete($_GET['id'], $userId);
             }
         }
         

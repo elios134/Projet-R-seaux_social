@@ -90,8 +90,10 @@ nav {
 }
 
 .user-pill .avatar-lg {
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
+     border-radius: 50%;
+    object-fit: cover;
     border: 2px solid var(--primary);
 }
 
@@ -171,14 +173,13 @@ nav a.btn-admin:hover {
     border: 2px solid white;
 }
 
-/* --- Avatars --- */
 .avatar-lg {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #f0f2f5;
-}
+    border: 2px solid var(--primary);}
+
 
 .avatar-md {
     width: 50px;
@@ -287,73 +288,102 @@ button:hover {
     text-decoration: underline;
 }
 
-/* --- Comments Section --- */
-.comments-list {
-    margin-top: 15px;
+
+
+.comments-section {
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 0 0 12px 12px;
 }
 
-.comment-item {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
-    align-items: flex-start;
-}
-
-/* Style pour l'indentation des réponses récursives */
-.comment-item-reply {
-    margin-left: 40px;
-    border-left: 2px solid var(--border);
-    padding-left: 12px;
-    margin-top: 8px;
-}
-
-.comment-bubble {
-    background: #f0f2f5;
-    padding: 8px 12px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-}
-
-.comment-bubble strong {
-    display: block; /* Le nom est au-dessus du message */
-    font-size: 0.85rem;
-    margin-bottom: 2px;
-}
-
-.comment-utility {
-    margin-left: 10px;
-    margin-top: 4px;
-    font-size: 0.8rem;
-    display: flex;
-    gap: 10px;
-}
-
-.comment-utility a, 
-.comment-utility button.link-style {
+.comments-section h5 {
+    margin-bottom: 15px;
     color: var(--text-muted);
-    text-decoration: none;
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: inherit;
-    font-family: inherit;
-    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.comment-utility a:hover {
+
+.comment {
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    background: #f8fafc; 
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.3s;
+}
+
+.comment.is-reply {
+    background: #f1f5f9; 
+    border-left: 3px solid var(--primary); 
+    margin-bottom: 10px;
+}
+
+.comment strong {
+    font-size: 0.85rem;
     color: var(--primary);
 }
 
-.comment-form {
+.comment p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+/* Actions (Répondre / Supprimer) */
+.comment-actions {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.comment-actions a, 
+.comment-actions button {
+    font-size: 0.75rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.comment-actions a:hover, 
+.comment-actions button:hover {
+    color: var(--primary);
+}
+
+.comment-actions .btn-delete-small {
+    color: var(--danger);
+}
+
+/* Formulaires de commentaires */
+.comment-form-container {
     margin-top: 15px;
 }
 
-.comment-form input {
-    flex: 1;
-    border-radius: 20px;
-    margin-bottom: 0;
+.comment-form-container textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.comment-form-container button {
+    margin-top: 8px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
 }
 
 .text-muted {
