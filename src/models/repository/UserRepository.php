@@ -41,11 +41,11 @@ class UserRepository extends Db
         return $db->prepare("DELETE FROM user WHERE id = ?")->execute([$id]);
     }
 
-    public function update($id, $nom, $prenom, $mail)
-    {
-        $db = self::connect();
-        $sql = "UPDATE user SET nom = ?, prenom = ?, mail = ? WHERE id = ?";
-        $stmt = $db->prepare($sql);
-        return $stmt->execute([$nom, $prenom, $mail, $id]);
-    }
+   public function update($id, $nom, $prenom, $mail, $role)
+{
+    $db = self::connect();
+    $sql = "UPDATE user SET nom = ?, prenom = ?, mail = ?, role = ? WHERE id = ?";
+    $stmt = $db->prepare($sql);
+    return $stmt->execute([$nom, $prenom, $mail, $role, $id]);
+}
 }

@@ -19,7 +19,9 @@ class AdminusersController extends Controller
         $nom = trim($_POST['nom']);
         $prenom = trim($_POST['prenom']);
         $mail = trim($_POST['mail']);
-        $userRepo->update($id, $nom, $prenom, $mail);
+        $role = trim($_POST['role']);
+
+        $userRepo->update($id, $nom, $prenom, $mail,$role);
         
         header("Location: /admin-users");
         exit;
@@ -33,6 +35,8 @@ class AdminusersController extends Controller
             exit;
         }
     }
+
+    
     
     $users = $userRepo->findAll();
     require_once __DIR__ . '/../views/admin-users.php';
