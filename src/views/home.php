@@ -59,13 +59,13 @@
                         <div class="post-header">
                             <img src="/uploads/profiles/<?= $post['user_image'] ?>" class="avatar-md">
                             <div class="post-info">
-                                <h3><?= htmlspecialchars($post['prenom']) ?></h3>
-                                <h2><?= htmlspecialchars($post['title']) ?></h2>
+                                <h3><?=$post['prenom'] ?></h3>
+                                <h2><?=$post['title']?></h2>
                             </div>
                         </div>
 
                         <div class="post-body">
-                            <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
+                            <p><?=$post['content'] ?></p>
                         </div>
 
                         <div class="post-actions">
