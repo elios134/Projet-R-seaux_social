@@ -32,10 +32,8 @@ class PostRepository extends Db
         
         $posts = [];
         foreach ($results as $data) {
-            // On crée l'objet à partir du tableau associatif de la BDD
             $post = new \App\Models\Entity\Post($data);
             
-            // On remplit les propriétés étendues
             $post->user_prenom = $data['prenom'];
             $post->user_image = $data['u_image'];
             $post->count_likes = $data['c_likes'];
@@ -43,6 +41,23 @@ class PostRepository extends Db
             $posts[] = $post;
         }
         return $posts;
+    }
+
+    // AJOUT: Méthode findById manquante
+    public function findById($id)
+    {
+        $db = self::connect();
+        $stmt = $db->prepare("SELECT * FROM post WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // AJOUT: Méthode update manquante
+    public function update($id, $title, $content, $userId)
+    {
+        $db = self::connect();
+        $sql = "UPDATE post SET title = ?, content = ? WHERE id = ? AND id_user = ?";
+        return $db->prepare($sql)->execute([$title, $content, $id, $userId]);
     }
 
     public function delete($id, $id_user)
@@ -57,5 +72,23 @@ class PostRepository extends Db
         $db = self::connect();
         $sql = "DELETE FROM post WHERE id = ?";
         return $db->prepare($sql)->execute([$id]);
+    }
+
+    // AJOUT: Méthode toggleLike manquante
+    public function toggleLike($postId, $userId)
+    {
+        $db = self::connect();
+        
+        // Vérifier si le like existe déjà
+        $stmt = $db->prepare("SELECT id FROM likes WHERE id_post = ? AND id_user = ?");
+        $stmt->execute([$postId, $userId]);
+        
+        if ($stmt->fetch()) {
+            // Unlike - supprimer le like
+            $db->prepare("DELETE FROM likes WHERE id_post = ? AND id_user = ?")->execute([$postId, $userId]);
+        } else {
+            // Like - ajouter le like
+            $db->prepare("INSERT INTO likes (id_post, id_user) VALUES (?, ?)")->execute([$postId, $userId]);
+        }
     }
 }

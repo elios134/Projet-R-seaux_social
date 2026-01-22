@@ -26,6 +26,15 @@ class UserRepository extends Db
         return $users;
     }
 
+    // AJOUT: Méthode register manquante
+    public function register($nom, $prenom, $mail, $password, $imageName)
+    {
+        $db = self::connect();
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO user (nom, prenom, mail, password, image, role) VALUES (?, ?, ?, ?, ?, 'user')";
+        return $db->prepare($sql)->execute([$nom, $prenom, $mail, $hashedPassword, $imageName]);
+    }
+
     public function updateImage($userId, $imageName)
     {
         $db = self::connect();

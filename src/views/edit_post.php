@@ -13,12 +13,17 @@
         <nav><a href="/">Retour à l'accueil</a></nav>
     </header>
     <div class="container">
-        <form action="/edit-post?id=<?= $post['id'] ?>" method="POST">
-            <input type="text" name="title" value="<?= $post['title'] ?>" required><br>
-            <textarea name="content" required><?= $post['content'] ?></textarea><br>
-            <button type="submit" name="update_post">Enregistrer les modifications</button>
-            <a href="/">Annuler</a>
-        </form>
+        <?php if ($post): ?>
+            <form action="/edit-post?id=<?= $post['id'] ?>" method="POST">
+                <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>" required><br>
+                <textarea name="content" required><?= htmlspecialchars($post['content']) ?></textarea><br>
+                <button type="submit" name="update_post">Enregistrer les modifications</button>
+                <a href="/">Annuler</a>
+            </form>
+        <?php else: ?>
+            <p style="color: red;">Erreur : Post introuvable.</p>
+            <a href="/">Retour à l'accueil</a>
+        <?php endif; ?>
     </div>
 </body>
 

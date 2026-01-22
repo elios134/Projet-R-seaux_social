@@ -15,13 +15,15 @@ class EditcommentController extends Controller {
         $id = $_GET['id'] ?? null;
         $comment = $commentRepo->findById($id);
 
-        if (!$comment || $comment['id_user'] != $_SESSION['user']['id']) {
+        // Correction: utiliser ->getId() au lieu de ['id']
+        if (!$comment || $comment['id_user'] != $_SESSION['user']->getId()) {
             header("Location: /");
             exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $commentRepo->update($id, $_POST['content'], $_SESSION['user']['id']);
+            // Correction: utiliser ->getId()
+            $commentRepo->update($id, $_POST['content'], $_SESSION['user']->getId());
             header("Location: /");
             exit;
         }

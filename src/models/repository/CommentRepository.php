@@ -31,6 +31,14 @@ class CommentRepository extends Db
         return $db->prepare($sql)->execute([$content, $postId, $userId, $parentId]);
     }
 
+    // AJOUT: Méthode update manquante
+    public function update($id, $content, $userId)
+    {
+        $db = self::connect();
+        $sql = "UPDATE comment SET content = ? WHERE id = ? AND id_user = ?";
+        return $db->prepare($sql)->execute([$content, $id, $userId]);
+    }
+
     public function delete($id)
     {
         $db = self::connect();

@@ -30,7 +30,7 @@
     <div class="container">
         <?php if (isset($_SESSION['user'])) : ?>
             <section class="post-form">
-                <h3>Quoi de neuf, <?= $_SESSION['user']->getPrenom() ?> ?</h3>
+                <h3>Quoi de neuf, <?= htmlspecialchars($_SESSION['user']->getPrenom()) ?> ?</h3>
                 <form action="/" method="POST">
                     <input type="text" name="title" placeholder="Titre de votre post" required>
                     <textarea name="content" placeholder="Exprimez-vous..." required></textarea>
@@ -43,9 +43,9 @@
             <?php foreach ($posts as $post) : ?>
                 <article class="post">
                     <div class="post-header">
-                        <img src="/uploads/profiles/<?= $post->getUserImage() ?>" class="avatar-md">
+                        <img src="/uploads/profiles/<?= htmlspecialchars($post->getUserImage()) ?>" class="avatar-md">
                         <div class="post-info">
-                            <strong><?= $post->getUserPrenom() ?></strong>
+                            <strong><?= htmlspecialchars($post->getUserPrenom()) ?></strong>
                             <div class="post-actions">
                                 <?php 
                                 $isOwner = (isset($_SESSION['user']) && $_SESSION['user']->getId() == $post->getIdUser());
@@ -63,8 +63,19 @@
                     </div>
 
                     <div class="post-content">
-                        <h3><?= $post->getTitle() ?></h3>
-                        <p><?= $post->getContent() ?></p>
+                        <h3><?= htmlspecialchars($post->getTitle()) ?></h3>
+                        <p><?= nl2br(htmlspecialchars($post->getContent())) ?></p>
+                    </div>
+
+                    <!-- AJOUT: Section likes -->
+                    <div class="post-footer">
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <a href="/like?id=<?= $post->getId() ?>" class="btn-like">
+                                ❤️ <?= $post->count_likes ?> J'aime
+                            </a>
+                        <?php else: ?>
+                            <span class="likes-count">❤️ <?= $post->count_likes ?> J'aime</span>
+                        <?php endif; ?>
                     </div>
 
                     <div class="comments-section">
@@ -72,11 +83,11 @@
                         <?php foreach ($post->comments as $comment): ?>
                             <div class="comment <?= $comment['parent_id'] ? 'is-reply' : '' ?>">
                                 <div class="comment-header">
-                                    <img src="/uploads/profiles/<?= $comment['image'] ?>" class="avatar-sm">
-                                    <strong><?= $comment['prenom'] ?></strong>
+                                    <img src="/uploads/profiles/<?= htmlspecialchars($comment['image']) ?>" class="avatar-sm">
+                                    <strong><?= htmlspecialchars($comment['prenom']) ?></strong>
                                 </div>
                                 
-                                <p><?= $comment['content'] ?></p>
+                                <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
                                 
                                 <div class="comment-actions">
                                     <?php if (isset($_SESSION['user'])): ?>
